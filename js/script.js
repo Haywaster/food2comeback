@@ -288,7 +288,7 @@ window.addEventListener('DOMContentLoaded', () =>{
     }
 });
 
-const num = [4, 5, 7, 2, 6];
+dasdas
 
 // 1 метод
 
@@ -302,5 +302,15 @@ const num = [4, 5, 7, 2, 6];
 
 // 2 метод
 
-const sum = num.reduce((sum,value) => value + sum);
+// const sum = num.reduce((sum,value) => value + sum);
+// console.log(sum);
+
+// 3 метод
+
+const num = [4, 5, 7, 2, 6];
+let sum = 0;
+
+for (let i = 0; i < num.length; i++) {
+    sum = sum + num[i];
+}
 console.log(sum);
