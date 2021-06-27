@@ -221,10 +221,22 @@ window.addEventListener('DOMContentLoaded', () =>{
     };
 
     forms.forEach(item => {
-        postData(item);
+        bindPostData(item);
     });
 
-    function postData(form) {
+    const postData = async (url, data) => {
+        const res = await fetch(url, {
+            method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: data
+            });
+
+        return await res.json();
+    };
+
+    function bindPostData(form) {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
 
@@ -238,19 +250,9 @@ window.addEventListener('DOMContentLoaded', () =>{
 
             const formData = new FormData(form);
 
-            const object = {};
-            formData.forEach(function(value, key){
-                object[key] = value;
-            });
+            const json = JSON.stringify(Object.fromEntries(formData.entries()));
 
-            fetch('server.php', {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify(object)
-            })
-            .then(data => data.text())
+            postData('http://localhost:3000/requests', json)
             .then(data => {
                 console.log(data);
                 showThanksModal(message.success);
@@ -286,31 +288,9 @@ window.addEventListener('DOMContentLoaded', () =>{
                 closeModal();
         }, 4000);
     }
+
+    fetch('http://localhost:3000/menu')
+        .then(data => data.json())
+        .then(res => console.log(res));
 });
 
-dasdas
-
-// 1 метод
-
-// let sum = 0;
-
-// num.forEach((e, i) => {
-//     sum = sum + e;
-// });
-
-// console.log(sum);
-
-// 2 метод
-
-// const sum = num.reduce((sum,value) => value + sum);
-// console.log(sum);
-
-// 3 метод
-
-const num = [4, 5, 7, 2, 6];
-let sum = 0;
-
-for (let i = 0; i < num.length; i++) {
-    sum = sum + num[i];
-}
-console.log(sum);
